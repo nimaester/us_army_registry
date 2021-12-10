@@ -1,5 +1,4 @@
 const express = require("express");
-const { restart } = require("nodemon");
 const app = express();
 const PORT = 3001;
 
