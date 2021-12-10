@@ -11,6 +11,6 @@ const soldierSchema = new Schema({
   superior: String,
 });
 
-const Soldier = mongoose.model("solider", soldierSchema);
+const Soldier = mongoose.model("soldier", soldierSchema);
 
-module.exports.Soldier = Soldier;
+module.exports = Soldier;

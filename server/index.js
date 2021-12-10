@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const PORT = 3001;
+const Soldier = require("../db/Soldier");
+// eslint-disable-next-line no-unused-vars
+const db = require("../db/index"); // need this to connect to mongo db
 
 app.use(express.json());
 
@@ -9,7 +12,9 @@ app.get("/tryme", (req, res) => {
 });
 
 app.get("/soldiers", (req, res) => {
-  res.status(200).send(); // add database here
+  Soldier.find()
+    .then((data) => res.status(200).send(data))
+    .catch((err) => res.status(400).send("Error getting data"));
 });
 
 app.listen(PORT, () => {
