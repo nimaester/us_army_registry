@@ -1,5 +1,5 @@
-import { Schema as _Schema, model } from "mongoose";
-const Schema = _Schema;
+let mongoose = require("mongoose");
+let Schema = mongoose.Schema;
 
 const soldierSchema = new Schema({
   id: Number,
@@ -11,6 +11,6 @@ const soldierSchema = new Schema({
   superior: String,
 });
 
-const Soldier = model("solider", soldierSchema);
+const Soldier = mongoose.model("solider", soldierSchema);
 
-export default Soldier;
+module.exports.Soldier = Soldier;
