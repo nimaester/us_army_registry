@@ -1,14 +1,10 @@
-import { connect, connection } from "mongoose";
+const mongoose = require("mongoose");
 
-connect("mongodb://localhost/airbnb-gallery", {
+mongoose.connect("mongodb://localhost/us_army", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const db = connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  console.log("connected to mongodb://localhost/airbnb-gallery");
-});
-
-export default db;
+mongoose.connection
+  .once("open", () => console.log("Connected to Mongo"))
+  .on("error", () => console.log("Cant connect to Mongo DB"));

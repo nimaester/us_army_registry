@@ -1,4 +1,4 @@
-## Packages Use
+## Packages Used
 
 - React (Frontend Framework)
 - Redux ?
