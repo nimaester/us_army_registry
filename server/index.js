@@ -24,6 +24,13 @@ app.get("soldiers/:id", (req, res) => {
     .catch((err) => res.status(404).send("Invalid id", err))
 })
 
+// app.put("soldiers/:id", (req, res) => { FIX LATER
+//   const { id } = params;
+//   const newData = req.body;
+//   Soldier.find({id: id})
+//     .then((data)
+// })
+
 app.listen(PORT, () => {
   console.log(`listening at http://localhost:${PORT}`);
 });
