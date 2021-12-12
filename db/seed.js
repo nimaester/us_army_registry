@@ -24,3 +24,8 @@ for (let i = 0; i < 4; i++) {
       : console.log("Success creating data");
   });
 }
+
+mongoose.connection.close(function () {
+   console.log('Connection has been successfully closed, see you again soon!');
+   process.exit(0);
+});
