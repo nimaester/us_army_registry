@@ -14,7 +14,7 @@ app.get("/tryme", (req, res) => {
 app.get("/soldiers", (req, res) => {
   Soldier.find()
     .then((data) => res.status(200).send(data))
-    .catch((err) => res.status(400).send("Error getting data"));
+    .catch((err) => res.status(404).send("Error getting data"));
 });
 
 app.listen(PORT, () => {
