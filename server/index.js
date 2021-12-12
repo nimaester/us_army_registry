@@ -26,7 +26,15 @@ app.get("soldiers/:id", (req, res) => {
 
 // app.put("soldiers/:id", (req, res) => { FIX LATER
 //   const { id } = params;
-//   const newData = req.body;
+//   const newSoldierData = new Soldier({
+//     id: req.body.id,
+//     rank: req.body.rank,
+//     sex: req.body.sex,
+//     startDate: req.body.startDate,
+//     phone: req.body.phone,
+//     email: req.body.email,
+//     superior: req.body.superior,
+//   })
 //   Soldier.find({id: id})
 //     .then((data)
 // })
