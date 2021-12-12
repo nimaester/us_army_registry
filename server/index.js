@@ -24,6 +24,28 @@ app.get("soldiers/:id", (req, res) => {
     .catch((err) => res.status(404).send("Invalid id", err))
 })
 
+app.post("soldiers/:id", (req, res) => {
+  const newSoldierData = new Soldier({
+    id: req.body.id,
+    image: req.body.image,
+    rank: req.body.rank,
+    sex: req.body.sex,
+    startDate: req.body.startDate,
+    phone: req.body.phone,
+    email: req.body.email,
+    superior: req.body.superior,
+  })
+  
+  newSoldierData.save((err) => {
+    if (err) {
+      res.status(400).send("Error creating data", err)
+    } else {
+      newSoldierData.save()
+      res.status(201).send("Succesfully created entry")
+    }
+  })
+})
+
 // app.put("soldiers/:id", (req, res) => { FIX LATER
 //   const { id } = params;
 //   const newSoldierData = new Soldier({
