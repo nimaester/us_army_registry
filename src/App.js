@@ -1,7 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 const App = () => {
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyles />
       <div className='App'>
         <h1>US Army Registry</h1>
       </div>
