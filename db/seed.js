@@ -52,7 +52,7 @@ const seedDatabase = () => {
       startDate: randomDate(new Date(2000, 0, 1), new Date()),
       phone: faker.phone.phoneNumberFormat(),
       email: faker.internet.email(),
-      superior: String(randomizer(0, 99)), // random superior
+      superior: String(randomizer(0, 9)), // random superior
     };
     if (i % 3 === 0 || i % 2 === 0) {
       newSoldierEntry.superior = "";
