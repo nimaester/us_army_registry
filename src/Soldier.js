@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const StyledSoldierTr = styled.tr``;
 
@@ -17,7 +17,7 @@ const StyledTd = styled.td`
   }
 `;
 
-const Soldier = ({ soldier, soldiers }) => {
+const Soldier = ({ soldier }) => {
   const {
     soldierName,
     soldierPhoto,
@@ -28,6 +28,19 @@ const Soldier = ({ soldier, soldiers }) => {
     email,
     superior,
   } = soldier;
+
+  const soldiers = useSelector((state) => state.initialData);
+  const superiors = useSelector((state) => state.superiors);
+
+  const countSubordinates = (soldier) => {
+    let count = 0;
+    superiors.forEach((superior) => {
+      if (superior === soldier.soldierName) {
+        count++;
+      }
+    });
+    return count > 0 ? count : null;
+  };
 
   return (
     <StyledSoldierTr>
@@ -47,7 +60,7 @@ const Soldier = ({ soldier, soldiers }) => {
       <StyledTd>
         {superior.length === 0 ? null : soldiers[Number(superior)].soldierName}
       </StyledTd>
-      <StyledTd></StyledTd>
+      <StyledTd center>{countSubordinates(soldier)}</StyledTd>
       <StyledTd center>
         <i className='fas fa-edit'></i>
       </StyledTd>

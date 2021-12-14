@@ -1,6 +1,8 @@
 const initState = {
   soldiers: [],
+  initialData: [],
   superiors: [],
+  sortBy: "",
   modal: false,
 };
 
@@ -10,6 +12,8 @@ const reducers = (state = initState, action) => {
       return {
         ...state,
         soldiers: action.payload.soldiers,
+        initialData: action.payload.soldiers,
+        superiors: action.payload.superiors,
       };
 
     case "OPEN_MODAL":
@@ -23,7 +27,12 @@ const reducers = (state = initState, action) => {
         ...state,
         modal: false,
       };
-    case "SORT_SOLDIERS":
+    case "SORT_SOLDIERS_BY_NAME":
+      return {
+        ...state,
+        soldiers: action.payload.soldiers,
+      };
+    case "SORT_SOLDIERS_BY_GENDER":
       return {
         ...state,
         soldiers: action.payload.soldiers,

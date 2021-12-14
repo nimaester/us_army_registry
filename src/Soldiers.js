@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Soldier from "./Soldier";
 import { useDispatch, useSelector } from "react-redux";
-import { getSoldiersData, sortSoldiers } from "./actions";
+import { getSoldiersData, sortSoldiersByName } from "./actions";
 
 const StyledSoldiers = styled.table``;
 
@@ -46,7 +46,7 @@ const Soldiers = () => {
               <StyledTh key={i}>
                 {header}{" "}
                 <i
-                  onClick={() => dispatch(sortSoldiers())}
+                  onClick={() => dispatch(sortSoldiersByName())}
                   className='fas fa-sort'
                 ></i>
               </StyledTh>
@@ -59,11 +59,7 @@ const Soldiers = () => {
       <tbody>
         {soldiers.length > 0 &&
           soldiers.map((soldier) => (
-            <Soldier
-              key={soldier.soldierId}
-              soldiers={soldiers}
-              soldier={soldier}
-            />
+            <Soldier key={soldier.soldierId} soldier={soldier} />
           ))}
       </tbody>
     </StyledSoldiers>

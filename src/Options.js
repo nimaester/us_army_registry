@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { getSoldiersData } from "./actions";
 
 const StyledOptions = styled.div`
   display: flex;
@@ -20,12 +22,18 @@ const StyledButtons = styled.button`
 `;
 
 const Options = () => {
+  const dispatch = useDispatch();
+
+  const handleResetClick = () => {
+    dispatch(getSoldiersData());
+  };
+
   return (
     <StyledOptions>
       <StyledInput type='text' placeholder='Search' />
 
       <div>
-        <StyledButtons>Reset</StyledButtons>
+        <StyledButtons onClick={() => handleResetClick()}>Reset</StyledButtons>
         <StyledButtons>New Soldier</StyledButtons>
       </div>
     </StyledOptions>
