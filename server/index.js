@@ -1,11 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = 3001;
 const Soldier = require("../db/Soldier");
 // eslint-disable-next-line no-unused-vars
 const db = require("../db/index"); // need this to connect to mongo db
-
-app.use(express.json());
+app.use(cors()); // need this to allow access-control-allow-origin CORS policy
 
 app.get("/tryme", (req, res) => {
   res.status(200).send("Hello There");
