@@ -42,28 +42,40 @@ export const sortBy = (sortOrder) => (dispatch) => {
   }
 };
 
-export const sortSoldiersByName = (type) => async (dispatch) => {
+export const sortSoldiers = (type) => async (dispatch) => {
   const soldiersData = await axios.get("http://localhost:3001/soldiers");
-  const sorted = soldiersData.data.sort((a, b) =>
-    a.soldierName.localeCompare(b.soldierName)
-  );
+  let sorted;
 
-  dispatch({
-    type: "SORT_SOLDIERS_BY_NAME",
-    payload: {
-      soldiers: sorted,
-    },
-  });
-};
+  if (type === "Name") {
+    sorted = soldiersData.data.sort((a, b) =>
+      a.soldierName.localeCompare(b.soldierName)
+    );
 
-export const sortSoldiersByGender = (type) => async (dispatch) => {
-  const soldiersData = await axios.get("http://localhost:3001/soldiers");
-  const sorted = soldiersData.data.sort((a, b) => a.sex.localeCompare(b.sex));
+    dispatch({
+      type: "SORT_SOLDIERS_BY_NAME",
+      payload: {
+        soldiers: sorted,
+      },
+    });
+  } else if (type === "Sex") {
+    sorted = soldiersData.data.sort((a, b) => b.sex.localeCompare(a.sex));
 
-  dispatch({
-    type: "SORT_SOLDIERS_BY_GENDER",
-    payload: {
-      soldiers: sorted,
-    },
-  });
+    dispatch({
+      type: "SORT_SOLDIERS_BY_GENDER",
+      payload: {
+        soldiers: sorted,
+      },
+    });
+  } else if (type === "Superior") {
+    sorted = soldiersData.data.sort((a, b) =>
+      b.superior.localeCompare(a.superior)
+    );
+
+    dispatch({
+      type: "SORT_SOLDIERS_BY_GENDER",
+      payload: {
+        soldiers: sorted,
+      },
+    });
+  }
 };

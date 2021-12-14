@@ -37,6 +37,12 @@ const reducers = (state = initState, action) => {
         ...state,
         soldiers: action.payload.soldiers,
       };
+    case "SORT_SOLDIERS_BY_SUPERIORS":
+      return {
+        ...state,
+        soldiers: action.payload.soldiers,
+      };
+
     default:
       return state;
   }
