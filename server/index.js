@@ -18,7 +18,7 @@ app.get("/soldiers", (req, res) => {
 });
 
 app.get("/soldiers/:id", (req, res) => {
-  const { id } = params;
+  const { id } = req.params;
   Soldier.find({ id: id })
     .then((data) => res.status(200).send(data))
     .catch((err) => res.status(404).send("Invalid id", err));
