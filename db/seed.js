@@ -39,10 +39,10 @@ const randomGender = (min, max) => {
 };
 
 const seedDatabase = () => {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     let newSoldierEntry = {
       soldierId: i,
-      soldierName: faker.name.findName(),
+      soldierName: `${faker.name.firstName()} ${faker.name.lastName()}`,
       soldierPhoto: `https://7528userurl.s3-us-west-1.amazonaws.com/userImage${randomizer(
         1,
         110
