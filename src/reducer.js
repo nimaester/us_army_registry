@@ -1,6 +1,7 @@
 const initState = {
   soldiers: [],
   superiors: [],
+  modal: false,
 };
 
 const reducers = (state = initState, action) => {
@@ -11,6 +12,22 @@ const reducers = (state = initState, action) => {
         soldiers: action.payload.soldiers,
       };
 
+    case "OPEN_MODAL":
+      return {
+        ...state,
+        modal: true,
+      };
+
+    case "CLOSE_MODAL":
+      return {
+        ...state,
+        modal: false,
+      };
+    case "SORT_SOLDIERS":
+      return {
+        ...state,
+        soldiers: action.payload.soldiers,
+      };
     default:
       return state;
   }
