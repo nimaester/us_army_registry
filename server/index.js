@@ -19,10 +19,10 @@ app.get("/soldiers", (req, res) => {
 
 app.get("/soldiers/:id", (req, res) => {
   const { id } = params;
-  Soldier.find({id: id})
+  Soldier.find({ id: id })
     .then((data) => res.status(200).send(data))
-    .catch((err) => res.status(404).send("Invalid id", err))
-})
+    .catch((err) => res.status(404).send("Invalid id", err));
+});
 
 app.post("/soldiers", (req, res) => {
   const newSoldierData = new Soldier({
@@ -34,17 +34,17 @@ app.post("/soldiers", (req, res) => {
     phone: req.body.phone,
     email: req.body.email,
     superior: req.body.superior,
-  })
-  
+  });
+
   newSoldierData.save((err) => {
     if (err) {
-      res.status(400).send("Error creating data", err)
+      res.status(400).send("Error creating data", err);
     } else {
-      newSoldierData.save()
-      res.status(201).send("Succesfully created entry")
+      newSoldierData.save();
+      res.status(201).send("Succesfully created entry");
     }
-  })
-})
+  });
+});
 
 // app.put("/soldiers/:id", (req, res) => { FIX LATER
 //   const { id } = params;

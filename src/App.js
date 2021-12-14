@@ -1,6 +1,5 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
-const faker = require("faker");
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -16,7 +15,6 @@ const App = () => {
       <GlobalStyles />
       <div className='App'>
         <h1>US Army Registry</h1>
-        <img src={faker.image.abstract()} alt='none' />
       </div>
     </>
   );
