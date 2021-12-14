@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/us_army", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect("mongodb://localhost/us_army");
 
 const db = mongoose.connection
   .once("open", () => console.log("Connected to Mongo"))
