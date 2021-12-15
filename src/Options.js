@@ -31,7 +31,6 @@ const Options = () => {
   return (
     <StyledOptions>
       <StyledInput type='text' placeholder='Search' />
-
       <div>
         <StyledButtons onClick={() => handleResetClick()}>Reset</StyledButtons>
         <StyledButtons>New Soldier</StyledButtons>

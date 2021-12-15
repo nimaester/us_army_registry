@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteEntry } from "./actions";
 
 const StyledSoldierTr = styled.tr``;
 
@@ -13,12 +14,13 @@ const StyledTd = styled.td`
   font-size: 0.9rem;
   text-align: ${(props) => (props.center ? "center" : "left")};
   &:hover {
-    cursor: ${(props) => (props.center ? "pointer" : "")};
+    cursor: ${(props) => (props.hover ? "pointer" : "")};
   }
 `;
 
 const Soldier = ({ soldier }) => {
   const {
+    soldierId,
     soldierName,
     soldierPhoto,
     rank,
@@ -26,20 +28,32 @@ const Soldier = ({ soldier }) => {
     startDate,
     phone,
     email,
-    superior,
   } = soldier;
 
-  const soldiers = useSelector((state) => state.initialData);
+  // const soldiers = useSelector((state) => state.initialData);
   const superiors = useSelector((state) => state.superiors);
+  const dispatch = useDispatch();
 
   const countSubordinates = (soldier) => {
-    let count = 0;
-    superiors.forEach((superior) => {
-      if (superior === soldier.soldierName) {
-        count++;
+    if (superiors[soldierName]) {
+      return superiors[soldierName].length;
+    }
+  };
+
+  const findSuperior = () => {
+    for (const superiorName in superiors) {
+      if (superiors[superiorName].includes(soldierName)) {
+        return superiorName;
       }
-    });
-    return count > 0 ? count : null;
+    }
+  };
+
+  const displaySuperior = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteEntry(id));
   };
 
   return (
@@ -57,14 +71,14 @@ const Soldier = ({ soldier }) => {
       <StyledTd>
         <a href={`mailto:${email}`}>{email}</a>
       </StyledTd>
-      <StyledTd>
-        {superior.length === 0 ? null : soldiers[Number(superior)].soldierName}
+      <StyledTd style={{ textDecoration: "underline" }}>
+        <StyledTd hover>{findSuperior()}</StyledTd>
       </StyledTd>
-      <StyledTd center>{countSubordinates(soldier)}</StyledTd>
+      <StyledTd center>{countSubordinates()}</StyledTd>
       <StyledTd center>
         <i className='fas fa-edit'></i>
       </StyledTd>
-      <StyledTd center>
+      <StyledTd center onClick={() => handleDelete(soldierId)}>
         <i className='fas fa-trash-alt'></i>
       </StyledTd>
     </StyledSoldierTr>

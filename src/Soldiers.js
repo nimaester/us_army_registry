@@ -12,6 +12,9 @@ const StyledTh = styled.th`
   text-align: left;
   padding: 1rem;
   white-space: nowrap;
+  &:hover {
+    cursor: ${(props) => (props.hover ? "pointer" : null)};
+  }
 `;
 
 const Soldiers = () => {
@@ -30,12 +33,11 @@ const Soldiers = () => {
   ];
 
   const dispatch = useDispatch();
+  const soldiers = useSelector((state) => state.soldiers);
 
   useEffect(() => {
     dispatch(getSoldiersData());
   }, [dispatch]);
-
-  const soldiers = useSelector((state) => state.soldiers);
 
   return (
     <StyledSoldiers>
@@ -43,12 +45,12 @@ const Soldiers = () => {
         <tr>
           {headers.map((header, i) =>
             header === "Name" || header === "Sex" || header === "Superior" ? (
-              <StyledTh key={i}>
-                {header}{" "}
-                <i
-                  onClick={() => dispatch(sortSoldiers(header))}
-                  className='fas fa-sort'
-                ></i>
+              <StyledTh
+                hover
+                key={i}
+                onClick={() => dispatch(sortSoldiers(header))}
+              >
+                {header} <i className='fas fa-sort'></i>
               </StyledTh>
             ) : (
               <StyledTh key={i}>{header}</StyledTh>

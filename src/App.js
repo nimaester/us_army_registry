@@ -27,6 +27,10 @@ const GlobalStyles = createGlobalStyle`
   button:hover {
     cursor: pointer;
   }
+  a {
+    color: black;
+  }
+ 
 `;
 
 const StyledMain = styled.div`

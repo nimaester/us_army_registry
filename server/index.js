@@ -1,65 +1,49 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const PORT = 3001;
-const Soldier = require("../db/Soldier");
+const PORT = 3002;
+const model = require("../db/model.js");
 // eslint-disable-next-line no-unused-vars
 const db = require("../db/index"); // need this to connect to mongo db
-app.use(cors()); // need this to allow access-control-allow-origin CORS policy
-
+app.use(cors());
 app.get("/tryme", (req, res) => {
   res.status(200).send("Hello There");
 });
 
 app.get("/soldiers", (req, res) => {
-  Soldier.find()
-    .then((data) => res.status(200).send(data))
-    .catch((err) => res.status(400).send("Error getting data", err));
-});
-
-app.get("/soldiers/:id", (req, res) => {
-  const { id } = req.params;
-  Soldier.find({ id: id })
-    .then((data) => res.status(200).send(data))
-    .catch((err) => res.status(404).send("Invalid id", err));
-});
-
-app.post("/soldiers", (req, res) => {
-  const newSoldierData = new Soldier({
-    id: req.body.id,
-    image: req.body.image,
-    rank: req.body.rank,
-    sex: req.body.sex,
-    startDate: req.body.startDate,
-    phone: req.body.phone,
-    email: req.body.email,
-    superior: req.body.superior,
-  });
-
-  newSoldierData.save((err) => {
+  model.getSoldierData((err, data) => {
     if (err) {
-      res.status(400).send("Error creating data", err);
+      res.status(400).send(err);
     } else {
-      newSoldierData.save();
-      res.status(201).send("Succesfully created entry");
+      res.status(200).send(data);
     }
   });
 });
 
-// app.put("/soldiers/:id", (req, res) => { FIX LATER
-//   const { id } = params;
-//   const newSoldierData = new Soldier({
-//     id: req.body.id,
-//     rank: req.body.rank,
-//     sex: req.body.sex,
-//     startDate: req.body.startDate,
-//     phone: req.body.phone,
-//     email: req.body.email,
-//     superior: req.body.superior,
-//   })
-//   Soldier.find({id: id})
-//     .then((data)
-// })
+app.delete("/soldiers/delete/:id", (req, res) => {
+  const { id } = req.params;
+  model.deleteSoldierData(id, (err) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send({
+        Message: "Succesfully deleted data entry",
+      });
+    }
+  });
+});
+
+app.post("/soldiers", (req, res) => {
+  model.createSoldierData((err, data) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(201).send({
+        Message: "Succesfully created data entry",
+      });
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`listening at http://localhost:${PORT}`);

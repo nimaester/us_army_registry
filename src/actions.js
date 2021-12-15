@@ -1,19 +1,35 @@
 import axios from "axios";
 
 export const getSoldiersData = () => async (dispatch) => {
-  const soldiersData = await axios.get("http://localhost:3001/soldiers");
-  const superiors = [];
-  soldiersData.data.forEach((soldier) =>
-    soldier.superior !== ""
-      ? superiors.push(soldiersData.data[Number(soldier.superior)].soldierName)
-      : null
-  );
-
+  const soldiersData = await axios.get("http://localhost:3002/soldiers");
+  const superiors = {};
+  soldiersData.data.forEach((soldier) => {
+    if (soldier.superior.length !== 0) {
+      let sup = soldiersData.data.find(
+        (s) => s.soldierId === Number(soldier.superior)
+      );
+      superiors[sup.soldierName]
+        ? superiors[sup.soldierName].push(soldier.soldierName)
+        : (superiors[sup.soldierName] = [soldier.soldierName]);
+    }
+  });
   dispatch({
     type: "GET_SOLDIERS_DATA",
     payload: {
       soldiers: soldiersData.data,
       superiors: superiors,
+    },
+  });
+};
+
+export const deleteEntry = (entry) => async (dispatch) => {
+  await axios.delete(`http://localhost:3002/soldiers/delete/${entry}`);
+  const soldiersData = await axios.get("http://localhost:3002/soldiers");
+
+  dispatch({
+    type: "DELETE_SOLDIER_DATA",
+    payload: {
+      initialData: soldiersData.data,
     },
   });
 };
@@ -30,52 +46,18 @@ export const closeModal = () => async (dispatch) => {
   });
 };
 
-export const sortBy = (sortOrder) => (dispatch) => {
-  if (sortOrder === "asc") {
-    dispatch({
-      type: "SORT_BY_ASCENDING",
-    });
-  } else {
-    dispatch({
-      type: "SORT_BY_DESCENDING",
-    });
-  }
-};
-
-export const sortSoldiers = (type) => async (dispatch) => {
-  const soldiersData = await axios.get("http://localhost:3001/soldiers");
-  let sorted;
-
+export const sortSoldiers = (type) => {
   if (type === "Name") {
-    sorted = soldiersData.data.sort((a, b) =>
-      a.soldierName.localeCompare(b.soldierName)
-    );
-
-    dispatch({
+    return {
       type: "SORT_SOLDIERS_BY_NAME",
-      payload: {
-        soldiers: sorted,
-      },
-    });
+    };
   } else if (type === "Sex") {
-    sorted = soldiersData.data.sort((a, b) => b.sex.localeCompare(a.sex));
-
-    dispatch({
+    return {
       type: "SORT_SOLDIERS_BY_GENDER",
-      payload: {
-        soldiers: sorted,
-      },
-    });
+    };
   } else if (type === "Superior") {
-    sorted = soldiersData.data.sort((a, b) =>
-      b.superior.localeCompare(a.superior)
-    );
-
-    dispatch({
-      type: "SORT_SOLDIERS_BY_GENDER",
-      payload: {
-        soldiers: sorted,
-      },
-    });
+    return {
+      type: "SORT_SOLDIERS_BY_SUPERIORS",
+    };
   }
 };
