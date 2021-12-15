@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteEntry } from "./actions";
+import { deleteEntry, displaySuperior } from "./actions";
 
 const StyledSoldierTr = styled.tr``;
 
@@ -18,6 +18,12 @@ const StyledTd = styled.td`
   }
 `;
 
+const StyledLinks = styled.span`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const Soldier = ({ soldier }) => {
   const {
     soldierId,
@@ -28,6 +34,7 @@ const Soldier = ({ soldier }) => {
     startDate,
     phone,
     email,
+    superior,
   } = soldier;
 
   // const soldiers = useSelector((state) => state.initialData);
@@ -48,13 +55,15 @@ const Soldier = ({ soldier }) => {
     }
   };
 
-  const displaySuperior = (e) => {
-    e.preventDefault();
+  const handleDisplaySuperior = (id) => {
+    dispatch(displaySuperior(id));
   };
 
   const handleDelete = (id) => {
     dispatch(deleteEntry(id));
   };
+
+  const hanldeDisplaySubordinates = () => {};
 
   return (
     <StyledSoldierTr>
@@ -72,13 +81,17 @@ const Soldier = ({ soldier }) => {
         <a href={`mailto:${email}`}>{email}</a>
       </StyledTd>
       <StyledTd style={{ textDecoration: "underline" }}>
-        <StyledTd hover>{findSuperior()}</StyledTd>
+        <StyledLinks onClick={() => handleDisplaySuperior(Number(superior))}>
+          {findSuperior()}
+        </StyledLinks>
       </StyledTd>
-      <StyledTd center>{countSubordinates()}</StyledTd>
-      <StyledTd center>
+      <StyledTd center style={{ textDecoration: "underline" }}>
+        <StyledLinks>{countSubordinates()}</StyledLinks>
+      </StyledTd>
+      <StyledTd center hover>
         <i className='fas fa-edit'></i>
       </StyledTd>
-      <StyledTd center onClick={() => handleDelete(soldierId)}>
+      <StyledTd center hover onClick={() => handleDelete(soldierId)}>
         <i className='fas fa-trash-alt'></i>
       </StyledTd>
     </StyledSoldierTr>

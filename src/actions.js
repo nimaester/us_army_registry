@@ -1,37 +1,55 @@
 import axios from "axios";
 
-export const getSoldiersData = () => async (dispatch) => {
+const handleDataEntries = async () => {
   const soldiersData = await axios.get("http://localhost:3002/soldiers");
   const superiors = {};
   soldiersData.data.forEach((soldier) => {
     if (soldier.superior.length !== 0) {
-      let sup = soldiersData.data.find(
+      let soldierSuperior = soldiersData.data.find(
         (s) => s.soldierId === Number(soldier.superior)
       );
-      superiors[sup.soldierName]
-        ? superiors[sup.soldierName].push(soldier.soldierName)
-        : (superiors[sup.soldierName] = [soldier.soldierName]);
+      if (soldierSuperior) {
+        superiors[soldierSuperior.soldierName]
+          ? superiors[soldierSuperior.soldierName].push(soldier.soldierName)
+          : (superiors[soldierSuperior.soldierName] = [soldier.soldierName]);
+      }
     }
   });
+
+  return [soldiersData.data, superiors];
+};
+
+export const getSoldiersData = () => async (dispatch) => {
+  let states = await handleDataEntries();
   dispatch({
     type: "GET_SOLDIERS_DATA",
     payload: {
-      soldiers: soldiersData.data,
-      superiors: superiors,
+      soldiers: states[0],
+      initialData: states[0],
+      superiors: states[1],
     },
   });
 };
 
 export const deleteEntry = (entry) => async (dispatch) => {
   await axios.delete(`http://localhost:3002/soldiers/delete/${entry}`);
-  const soldiersData = await axios.get("http://localhost:3002/soldiers");
+  let states = await handleDataEntries();
 
   dispatch({
-    type: "DELETE_SOLDIER_DATA",
+    type: "GET_SOLDIERS_DATA",
     payload: {
-      initialData: soldiersData.data,
+      initialData: states[0],
+      soldiers: states[0],
+      superiors: states[1],
     },
   });
+};
+
+export const getSoldiersNames = (name) => {
+  return {
+    type: "GET_SOLDIERS_NAMES",
+    payload: name,
+  };
 };
 
 export const openModal = () => async (dispatch) => {
@@ -60,4 +78,11 @@ export const sortSoldiers = (type) => {
       type: "SORT_SOLDIERS_BY_SUPERIORS",
     };
   }
+};
+
+export const displaySuperior = (id) => {
+  return {
+    type: "DISPLAY_SUPERIOR",
+    payload: id,
+  };
 };

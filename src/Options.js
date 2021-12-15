@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { getSoldiersData } from "./actions";
+import { getSoldiersData, getSoldiersNames } from "./actions";
 
 const StyledOptions = styled.div`
   display: flex;
@@ -23,14 +23,27 @@ const StyledButtons = styled.button`
 
 const Options = () => {
   const dispatch = useDispatch();
-
+  const [query, setQuery] = useState("");
   const handleResetClick = () => {
     dispatch(getSoldiersData());
   };
 
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(getSoldiersNames(query));
+  }, [dispatch, query]);
+
   return (
     <StyledOptions>
-      <StyledInput type='text' placeholder='Search' />
+      <StyledInput
+        onChange={handleChange}
+        value={query}
+        type='text'
+        placeholder='Search by name'
+      />
       <div>
         <StyledButtons onClick={() => handleResetClick()}>Reset</StyledButtons>
         <StyledButtons>New Soldier</StyledButtons>

@@ -7,17 +7,30 @@ const initState = {
 
 const reducers = (state = initState, action) => {
   switch (action.type) {
-    case "DELETE_SOLDIERS_DATA":
+    case "GET_SOLDIERS_NAMES":
       return {
         ...state,
-        initialData: action.payload.soldiers,
+        soldiers: [...state.initialData].filter((soldier) =>
+          soldier.soldierName
+            .toLowerCase()
+            .trim()
+            .includes(action.payload.toLowerCase())
+        ),
+      };
+
+    case "DISPLAY_SUPERIOR":
+      return {
+        ...state,
+        soldiers: [...state.initialData].filter(
+          (soldier) => soldier.soldierId === action.payload
+        ),
       };
 
     case "GET_SOLDIERS_DATA":
       return {
         ...state,
         soldiers: action.payload.soldiers,
-        initialData: action.payload.soldiers,
+        initialData: action.payload.initialData,
         superiors: action.payload.superiors,
       };
 
@@ -33,28 +46,25 @@ const reducers = (state = initState, action) => {
         modal: false,
       };
     case "SORT_SOLDIERS_BY_NAME":
-      let sortByName = [...state.soldiers].sort((a, b) =>
-        a.soldierName.localeCompare(b.soldierName)
-      );
       return {
         ...state,
-        soldiers: sortByName,
+        soldiers: [...state.soldiers].sort((a, b) =>
+          a.soldierName.localeCompare(b.soldierName)
+        ),
       };
     case "SORT_SOLDIERS_BY_GENDER":
-      let sortByGender = [...state.soldiers].sort((a, b) =>
-        a.sex.localeCompare(b.sex)
-      );
       return {
         ...state,
-        soldiers: sortByGender,
+        soldiers: [...state.soldiers].sort((a, b) =>
+          a.sex.localeCompare(b.sex)
+        ),
       };
     case "SORT_SOLDIERS_BY_SUPERIORS":
-      let sortBySuperiors = [...state.soldiers].sort((a, b) =>
-        b.superior.localeCompare(a.superior)
-      );
       return {
         ...state,
-        soldiers: sortBySuperiors,
+        soldiers: [...state.soldiers].sort((a, b) =>
+          b.superior.localeCompare(a.superior)
+        ),
       };
 
     default:
