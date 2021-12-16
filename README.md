@@ -8,11 +8,17 @@
 - Mongoose (ODM)
 - Mongo (DB)
 - Express.js (Node.js web application framework)
+## How to install
 
-SERVER runs on localhost3002 <br>
-FRONTEND runs on localhost3000
+npm install <br>
+run seed script <br>
+npm start
 
-Things need to do <br>
+server runs on localhost:3002 <br>
+frontend runs on localhost:3000
+
+## Checklist on things to do
+
 
 - create a seeding script to populate db
 - have a schema for a soldier
@@ -47,3 +53,4 @@ Things need to do <br>
   - Dropdown menu to select Superior
 
  Design document at https://excalidraw.com/#json=hyJxnDckYEr7x6PdOxOVZ,TjJd6IUuWjXVBiL2RnA4Pg
+
