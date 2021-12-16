@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal, createSoldierData } from "./actions";
+import {
+  toggleModal,
+  createSoldierData,
+  disableEditSoldier,
+  editSoldierInfo,
+} from "./actions";
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -77,34 +82,21 @@ const StyledButtons = styled.div`
   justify-content: center;
 `;
 
-let lazyId = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
 const Modal = () => {
-  const emptySoldierForm = {
-    soldierId: lazyId(35, 99999),
-    soldierName: "",
-    soldierPhoto:
-      "https://7528userurl.s3.us-west-1.amazonaws.com/army_Logo.png",
-    rank: "",
-    sex: "",
-    startDate: "",
-    phone: "",
-    email: "",
-    superior: "",
-  };
-
-  const [newSoldier, setNewSoldier] = useState(emptySoldierForm);
+  const defaultValue = useSelector((state) => state.defaultValue);
+  const [newSoldier, setNewSoldier] = useState(defaultValue);
   const superiors = useSelector((state) => state.superiors);
-  // const soldiers = useSelector((state) => state.soldiers);
+  const editSoldier = useSelector((state) => state.editSoldier);
+  const editing = useSelector((state) => state.editing);
+  const dispatch = useDispatch();
 
   // const findSuperiorIdByName = (name) => {
   //   return soldiers.filter((soldier) => soldier.soldierName === name)[0]
   //     .soldierId;
   // };
+  useEffect(() => {
+    setNewSoldier(editSoldier);
+  }, [editSoldier]);
 
   const arrayOfSuperiors = Object.keys(superiors);
   const ranks = [
@@ -120,10 +112,11 @@ const Modal = () => {
     "Private",
   ];
 
-  const dispatch = useDispatch();
   const handleCloseButton = () => {
+    dispatch(disableEditSoldier());
     dispatch(toggleModal());
   };
+
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
@@ -133,16 +126,32 @@ const Modal = () => {
     }));
   };
   const handleSubmit = (data) => {
+    dispatch(disableEditSoldier());
     dispatch(createSoldierData(data));
     dispatch(toggleModal());
-    setNewSoldier(emptySoldierForm);
+    setNewSoldier(defaultValue);
+    isDisabled();
+  };
+
+  const handleEditSubmit = (id, data) => {
+    dispatch(editSoldierInfo(id, data));
+    dispatch(toggleModal());
+    dispatch(disableEditSoldier());
+  };
+
+  // checks if all entries are filled out, if not disable the submit button
+  const isDisabled = () => {
+    return (
+      editing ||
+      Object.values(newSoldier).every((val) => val > 0 || val.length > 0)
+    );
   };
 
   return (
     <StyledModal>
       <StyledBackground>
         <StyledMainForm onSubmit={() => handleSubmit(newSoldier)}>
-          <StyledTitle>Soldier Entry</StyledTitle>
+          <StyledTitle>{editing ? "Edit" : "Create"} Soldier Entry</StyledTitle>
           <StyledForm>
             <StyledFormImage>
               <StyledLogo src={newSoldier.soldierPhoto} alt='' />
@@ -163,6 +172,7 @@ const Modal = () => {
                   <InputLabel>Rank</InputLabel>
                   <Select
                     name='rank'
+                    label='rank'
                     onChange={handleChange}
                     value={newSoldier.rank}
                   >
@@ -233,6 +243,7 @@ const Modal = () => {
                     name='superior'
                     onChange={handleChange}
                     value={newSoldier.superior}
+                    label='superior'
                   >
                     {arrayOfSuperiors.map((superior, i) => (
                       <MenuItem key={i} value={superior}>
@@ -248,8 +259,11 @@ const Modal = () => {
           <StyledButtons>
             <Stack spacing={5} mt={4} direction='row'>
               <Button
+                disabled={!isDisabled()}
                 onClick={() => {
-                  handleSubmit(newSoldier);
+                  editing
+                    ? handleEditSubmit(newSoldier.soldierId, newSoldier)
+                    : handleSubmit(newSoldier);
                 }}
                 variant='outlined'
               >

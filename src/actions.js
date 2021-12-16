@@ -19,55 +19,108 @@ const handleDataEntries = async () => {
   return [soldiersData.data, superiors];
 };
 
+export const editSoldierInfo = (id, soldierData) => async (dispatch) => {
+  try {
+    await axios.put(`http://localhost:3002/soldiers/update/${id}`, soldierData);
+    let states = await handleDataEntries();
+    dispatch({
+      type: "GET_SOLDIERS_DATA",
+      payload: {
+        soldiers: states[0],
+        initialData: states[0],
+        superiors: states[1],
+      },
+    });
+  } catch {
+    console.log("errrurrrrsss"); // always remember to use body parser or app.use(express.json())
+  }
+};
+
+export const disableEditSoldier = () => {
+  return {
+    type: "DISABLE_EDIT_SOLDIER",
+  };
+};
+
+export const enableEditSoldier = () => {
+  return {
+    type: "ENABLE_EDIT_SOLDIER",
+  };
+};
+
+export const getSoldierInfo = (id) => async (dispatch) => {
+  try {
+    let soldierData = await axios.get(`http://localhost:3002/soldiers/${id}`);
+    dispatch({
+      type: "GET_SOLDIER_INFO",
+      payload: soldierData.data,
+    });
+  } catch {
+    console.log("Cant find soldier data");
+  }
+};
+
 export const resetSoldierData = () => {
   return {
     type: "RESET_SOLDIER_DATA",
   };
 };
 
+export const displaySubordinates = (subs) => {
+  return {
+    type: "DISPLAY_SUBORDINATES",
+    payload: subs,
+  };
+};
+
 export const createSoldierData = (soldierData) => async (dispatch) => {
   try {
     await axios.post(`http://localhost:3002/soldiers`, soldierData);
+    let states = await handleDataEntries();
+    dispatch({
+      type: "GET_SOLDIERS_DATA",
+      payload: {
+        soldiers: states[0],
+        initialData: states[0],
+        superiors: states[1],
+      },
+    });
   } catch {
     console.log("errrurrrrsss"); // always remember to use body parser or app.use(express.json())
   }
-
-  let states = await handleDataEntries();
-
-  dispatch({
-    type: "GET_SOLDIERS_DATA",
-    payload: {
-      soldiers: states[0],
-      initialData: states[0],
-      superiors: states[1],
-    },
-  });
 };
 
 export const getSoldiersData = () => async (dispatch) => {
-  let states = await handleDataEntries();
-  dispatch({
-    type: "GET_SOLDIERS_DATA",
-    payload: {
-      soldiers: states[0],
-      initialData: states[0],
-      superiors: states[1],
-    },
-  });
+  try {
+    let states = await handleDataEntries();
+    dispatch({
+      type: "GET_SOLDIERS_DATA",
+      payload: {
+        soldiers: states[0],
+        initialData: states[0],
+        superiors: states[1],
+      },
+    });
+  } catch {
+    console.log("Cant get data");
+  }
 };
 
 export const deleteEntry = (entry) => async (dispatch) => {
-  await axios.delete(`http://localhost:3002/soldiers/delete/${entry}`);
-  let states = await handleDataEntries();
-
-  dispatch({
-    type: "GET_SOLDIERS_DATA",
-    payload: {
-      initialData: states[0],
-      soldiers: states[0],
-      superiors: states[1],
-    },
-  });
+  try {
+    await axios.delete(`http://localhost:3002/soldiers/delete/${entry}`);
+    let states = await handleDataEntries();
+    dispatch({
+      type: "GET_SOLDIERS_DATA",
+      payload: {
+        initialData: states[0],
+        soldiers: states[0],
+        superiors: states[1],
+      },
+    });
+  } catch {
+    console.log("Cant get data");
+  }
 };
 
 export const getSoldiersNames = (name) => {

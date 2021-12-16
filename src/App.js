@@ -5,6 +5,7 @@ import Soldiers from "./Soldiers.js";
 import Options from "./Options";
 
 const GlobalStyles = createGlobalStyle`
+  
   body {
     margin: 0;
     padding: 0;
@@ -13,6 +14,7 @@ const GlobalStyles = createGlobalStyle`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
   }
   tr{
       background-color: #D0DEF0;

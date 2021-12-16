@@ -6,6 +6,7 @@ import {
   getSoldiersNames,
   toggleModal,
   resetSoldierData,
+  disableEditSoldier,
 } from "./actions";
 
 const StyledOptions = styled.div`
@@ -39,6 +40,7 @@ const Options = () => {
   };
 
   const handleNewSoldierButton = () => {
+    dispatch(disableEditSoldier());
     dispatch(toggleModal());
   };
 

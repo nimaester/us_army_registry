@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteEntry, displaySuperior } from "./actions";
+import {
+  deleteEntry,
+  displaySuperior,
+  displaySubordinates,
+  getSoldierInfo,
+  enableEditSoldier,
+} from "./actions";
 
 const StyledSoldierTr = styled.tr``;
 
@@ -37,7 +43,7 @@ const Soldier = ({ soldier }) => {
     superior,
   } = soldier;
 
-  // const soldiers = useSelector((state) => state.initialData);
+  const soldiers = useSelector((state) => state.initialData);
   const superiors = useSelector((state) => state.superiors);
   const dispatch = useDispatch();
 
@@ -63,7 +69,24 @@ const Soldier = ({ soldier }) => {
     dispatch(deleteEntry(id));
   };
 
-  // const hanldeDisplaySubordinates = () => {};
+  const handleDisplaySubordinates = () => {
+    let subordinates = [];
+    if (superiors[soldierName]) {
+      superiors[soldierName].forEach((soldier) => {
+        soldiers.forEach((sub) => {
+          if (sub.soldierName === soldier) {
+            subordinates.push(sub);
+          }
+        });
+      });
+    }
+    dispatch(displaySubordinates(subordinates));
+  };
+
+  const handleUpdateSoldier = (id) => {
+    dispatch(enableEditSoldier());
+    dispatch(getSoldierInfo(id));
+  };
 
   return (
     <StyledSoldierTr>
@@ -86,9 +109,11 @@ const Soldier = ({ soldier }) => {
         </StyledLinks>
       </StyledTd>
       <StyledTd center style={{ textDecoration: "underline" }}>
-        <StyledLinks>{countSubordinates()}</StyledLinks>
+        <StyledLinks onClick={() => handleDisplaySubordinates()}>
+          {countSubordinates()}
+        </StyledLinks>
       </StyledTd>
-      <StyledTd center hover>
+      <StyledTd center hover onClick={() => handleUpdateSoldier(soldierId)}>
         <i className='fas fa-edit'></i>
       </StyledTd>
       <StyledTd center hover onClick={() => handleDelete(soldierId)}>
