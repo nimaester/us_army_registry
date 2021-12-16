@@ -39,7 +39,7 @@ const randomGender = (min, max) => {
 };
 
 const seedDatabase = () => {
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 100; i++) {
     let newSoldierEntry = {
       soldierId: i,
       soldierName: `${faker.name.firstName()} ${faker.name.lastName()}`,
@@ -52,7 +52,7 @@ const seedDatabase = () => {
       startDate: randomDate(new Date(2000, 0, 1), new Date()),
       phone: faker.phone.phoneNumberFormat(),
       email: faker.internet.email(),
-      superior: String(randomizer(0, 19)), // random superior
+      superior: String(randomizer(0, 99)), // random superior
     };
     if (i % 3 === 0 || i % 4 === 0) {
       newSoldierEntry.superior = "";

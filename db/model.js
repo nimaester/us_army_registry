@@ -32,8 +32,22 @@ const createSoldierData = (data, callback) => {
   });
 };
 
+const getOneSoldierData = (id, callback) => {
+  Soldier.findOne({ soldierId: id }, (err, data) => {
+    err ? callback(null, err) : callback(null, data);
+  });
+};
+
+const updateSoliderData = (id, newSoldierData, callback) => {
+  Soldier.findOneAndUpdate({ soldierId: id }, newSoldierData, (err, data) => {
+    err ? callback(null, err) : callback(null, data);
+  });
+};
+
 module.exports = {
   getSoldierData,
   deleteSoldierData,
   createSoldierData,
+  getOneSoldierData,
+  updateSoliderData,
 };
