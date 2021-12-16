@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { getSoldiersData, getSoldiersNames, toggleModal } from "./actions";
+import {
+  // getSoldiersData,
+  getSoldiersNames,
+  toggleModal,
+  resetSoldierData,
+} from "./actions";
 
 const StyledOptions = styled.div`
   display: flex;
@@ -24,8 +29,9 @@ const StyledButtons = styled.button`
 const Options = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+
   const handleResetClick = () => {
-    dispatch(getSoldiersData());
+    dispatch(resetSoldierData());
   };
 
   const handleChange = (e) => {

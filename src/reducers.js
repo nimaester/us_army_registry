@@ -7,6 +7,12 @@ const initState = {
 
 const reducers = (state = initState, action) => {
   switch (action.type) {
+    case "RESET_SOLDIER_DATA":
+      return {
+        ...state,
+        soldiers: state.initialData,
+      };
+
     case "GET_SOLDIERS_NAMES":
       return {
         ...state,

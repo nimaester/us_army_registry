@@ -19,6 +19,12 @@ const handleDataEntries = async () => {
   return [soldiersData.data, superiors];
 };
 
+export const resetSoldierData = () => {
+  return {
+    type: "RESET_SOLDIER_DATA",
+  };
+};
+
 export const createSoldierData = (soldierData) => async (dispatch) => {
   try {
     await axios.post(`http://localhost:3002/soldiers`, soldierData);

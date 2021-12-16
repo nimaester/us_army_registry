@@ -30,8 +30,6 @@ const GlobalStyles = createGlobalStyle`
   a {
     color: black;
   }
-
- 
 `;
 
 const StyledMain = styled.div`

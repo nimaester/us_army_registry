@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors"); // bypass cors policy errors
+const cors = require("cors"); // bypass cors policy warning
 const app = express();
 const PORT = 3002;
 const model = require("../db/model.js");
@@ -14,11 +14,7 @@ app.get("/tryme", (req, res) => {
 
 app.get("/soldiers", (req, res) => {
   model.getSoldierData((err, data) => {
-    err
-      ? res.status(404).send(err)
-      : res.status(200).send({
-          Message: "Succesfully retrieved data",
-        });
+    err ? res.status(404).send(err) : res.status(200).send(data);
   });
 });
 
