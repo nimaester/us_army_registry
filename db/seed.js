@@ -54,7 +54,7 @@ const seedDatabase = () => {
       email: faker.internet.email(),
       superior: String(randomizer(0, 19)), // random superior
     };
-    if (i % 3 === 0 || i % 2 === 0) {
+    if (i % 3 === 0 || i % 4 === 0) {
       newSoldierEntry.superior = "";
     }
 

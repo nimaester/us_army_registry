@@ -14,7 +14,26 @@ const deleteSoldierData = (id, callback) => {
   });
 };
 
+const createSoldierData = (data, callback) => {
+  const newSoldierData = new Soldier({
+    soldierId: data.soldierId,
+    soldierName: data.soldierName,
+    soldierPhoto: data.soldierPhoto,
+    rank: data.rank,
+    sex: data.sex,
+    startDate: data.startDate,
+    phone: data.phone,
+    email: data.email,
+    superior: data.superior,
+  });
+
+  newSoldierData.save().then((err, data) => {
+    err ? callback(null, err) : callback(null, data);
+  });
+};
+
 module.exports = {
   getSoldierData,
   deleteSoldierData,
+  createSoldierData,
 };
