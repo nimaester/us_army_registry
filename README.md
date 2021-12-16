@@ -5,12 +5,12 @@
 - Styled Components (Styling)
 - Axios (Making HTTP Requests)
 - Nodemon (CLI that automatically restarts server when you save)
-- Mongoose (ORM)
+- Mongoose (ODM)
 - Mongo (DB)
 - Express.js (Node.js web application framework)
 
-DB runs on localhost3001 <br>
-FE runs on localhost3000
+SERVER runs on localhost3002 <br>
+FRONTEND runs on localhost3000
 
 Things need to do <br>
 
@@ -31,13 +31,13 @@ Things need to do <br>
 - have frontend connect to server
 - have server connect to db
 - get images for peoples avatars
-- learn how to upload image on a mongodb local
 - CRUD operations 
   - create soldier
   - update soldier
   - delete solider
   - get soldier 
-- Whe creating a solider
+  - get soldiers
+- When creating a solider
   - Should have input for name
   - A dropdown menu to select Rank
   - A radio button for Sex
@@ -45,3 +45,5 @@ Things need to do <br>
   - Input for Phone
   - Input for Email
   - Dropdown menu to select Superior
+
+## Design document at https://excalidraw.com/#json=hyJxnDckYEr7x6PdOxOVZ,TjJd6IUuWjXVBiL2RnA4Pg
