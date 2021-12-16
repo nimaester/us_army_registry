@@ -63,7 +63,7 @@ const Soldier = ({ soldier }) => {
     dispatch(deleteEntry(id));
   };
 
-  const hanldeDisplaySubordinates = () => {};
+  // const hanldeDisplaySubordinates = () => {};
 
   return (
     <StyledSoldierTr>

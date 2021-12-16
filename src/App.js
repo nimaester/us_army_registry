@@ -30,11 +30,13 @@ const GlobalStyles = createGlobalStyle`
   a {
     color: black;
   }
+
  
 `;
 
 const StyledMain = styled.div`
   max-width: 1400px;
+  padding: 2rem;
 `;
 
 const StyledApp = styled.div`

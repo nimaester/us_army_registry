@@ -19,6 +19,25 @@ const handleDataEntries = async () => {
   return [soldiersData.data, superiors];
 };
 
+export const createSoldierData = (soldierData) => async (dispatch) => {
+  try {
+    await axios.post(`http://localhost:3002/soldiers`, soldierData);
+  } catch {
+    console.log("errrurrrrsss"); // always remember to use body parser or app.use(express.json())
+  }
+
+  let states = await handleDataEntries();
+
+  dispatch({
+    type: "GET_SOLDIERS_DATA",
+    payload: {
+      soldiers: states[0],
+      initialData: states[0],
+      superiors: states[1],
+    },
+  });
+};
+
 export const getSoldiersData = () => async (dispatch) => {
   let states = await handleDataEntries();
   dispatch({
@@ -52,16 +71,10 @@ export const getSoldiersNames = (name) => {
   };
 };
 
-export const openModal = () => async (dispatch) => {
-  dispatch({
-    type: "OPEN_MODAL",
-  });
-};
-
-export const closeModal = () => async (dispatch) => {
-  dispatch({
-    type: "CLOSE_MODAL",
-  });
+export const toggleModal = () => {
+  return {
+    type: "TOGGLE_MODAL",
+  };
 };
 
 export const sortSoldiers = (type) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { getSoldiersData, getSoldiersNames } from "./actions";
+import { getSoldiersData, getSoldiersNames, toggleModal } from "./actions";
 
 const StyledOptions = styled.div`
   display: flex;
@@ -32,6 +32,10 @@ const Options = () => {
     setQuery(e.target.value);
   };
 
+  const handleNewSoldierButton = () => {
+    dispatch(toggleModal());
+  };
+
   useEffect(() => {
     dispatch(getSoldiersNames(query));
   }, [dispatch, query]);
@@ -46,7 +50,9 @@ const Options = () => {
       />
       <div>
         <StyledButtons onClick={() => handleResetClick()}>Reset</StyledButtons>
-        <StyledButtons>New Soldier</StyledButtons>
+        <StyledButtons onClick={() => handleNewSoldierButton()}>
+          New Soldier
+        </StyledButtons>
       </div>
     </StyledOptions>
   );

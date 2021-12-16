@@ -34,35 +34,29 @@ const reducers = (state = initState, action) => {
         superiors: action.payload.superiors,
       };
 
-    case "OPEN_MODAL":
+    case "TOGGLE_MODAL":
       return {
         ...state,
-        modal: true,
-      };
-
-    case "CLOSE_MODAL":
-      return {
-        ...state,
-        modal: false,
+        modal: !state.modal,
       };
     case "SORT_SOLDIERS_BY_NAME":
       return {
         ...state,
-        soldiers: [...state.soldiers].sort((a, b) =>
+        soldiers: [...state.initialData].sort((a, b) =>
           a.soldierName.localeCompare(b.soldierName)
         ),
       };
     case "SORT_SOLDIERS_BY_GENDER":
       return {
         ...state,
-        soldiers: [...state.soldiers].sort((a, b) =>
+        soldiers: [...state.initialData].sort((a, b) =>
           a.sex.localeCompare(b.sex)
         ),
       };
     case "SORT_SOLDIERS_BY_SUPERIORS":
       return {
         ...state,
-        soldiers: [...state.soldiers].sort((a, b) =>
+        soldiers: [...state.initialData].sort((a, b) =>
           b.superior.localeCompare(a.superior)
         ),
       };
