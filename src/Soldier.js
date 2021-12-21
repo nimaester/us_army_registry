@@ -7,7 +7,7 @@ import {
   displaySubordinates,
   getSoldierInfo,
   enableEditSoldier,
-} from "./actions";
+} from "./actions/actions";
 
 const StyledSoldierTr = styled.tr``;
 

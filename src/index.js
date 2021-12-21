@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
-import reducers from "./reducers";
+import reducers from "./reducers/reducers";
 import thunk from "redux-thunk";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // allows to use redux devtools

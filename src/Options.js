@@ -7,7 +7,7 @@ import {
   toggleModal,
   resetSoldierData,
   disableEditSoldier,
-} from "./actions";
+} from "./actions/actions";
 
 const StyledOptions = styled.div`
   display: flex;

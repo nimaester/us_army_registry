@@ -6,7 +6,7 @@ import {
   createSoldierData,
   disableEditSoldier,
   editSoldierInfo,
-} from "./actions";
+} from "./actions/actions";
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";

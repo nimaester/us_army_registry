@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Soldier from "./Soldier";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getSoldiersData, sortSoldiers } from "./actions";
+import { getSoldiersData, sortSoldiers } from "./actions/actions";
 
 const StyledSoldiers = styled.table``;
 
